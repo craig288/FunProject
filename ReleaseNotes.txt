@@ -1,0 +1,140 @@
+                      Asset Tag Tool Release Notes
+                  Copyright (c) 2004 Intel Corporation
+                          All Rights Reserved
+                            May 21, 2004
+
+The Asset Tag Tool provides the ability to read and display the FRU 
+fields Asset Tag, Service Tag, and PPID. It also provides the capability 
+to update the Asset Tag field. This tool is executed from a command 
+prompt in the EFI Shell environment.
+
+
+RELEASE NOTES FOR ASSET TAG TOOL VERSION 1.0 BUILD 6
+
+A. CHANGES SINCE PREVIOUS VERSION
+
+   1. Streamlined system FRU read and write operations. The utility now
+      reads and updates only Product and Common header FRU areas. 
+
+B. DEPENDENCIES 
+
+   1. Requires the system FRU to be set up with the Goblin FRU configuration.
+   1. Executes under the EFI Shell Ver 0.99 or greater.
+   2. A system reset is required after updating the FRU fields.
+
+C. SUPPORTED PLATFORMS
+
+   1. Dell PowerEdge 7250
+
+D. HOW TO USE THIS UTILITY
+
+   1. Boot to the EFI shell.
+   2. Copy the following files to HD or removable media:
+
+      a. asset.efi
+      b. ipmi.efi
+      c. frudata.efi
+      d. frudata.str
+
+
+   3. Command line Interface
+
+        Usage: asset [-h] [-i] [-f] [-d] [-a <value>]
+
+        Command line switches defined below:
+
+        -h : (or -?) Displays the command line help.
+        -i : Displays the asset tag, service tag, and PPID FRU fields
+             of the system.
+        -a : Sets the asset tag to the specified value.
+        -d : Used in conjunction with -a to delete the asset tag.
+        -f : Disables prompting the user for confirmation during an
+             operation.
+
+        Usage Examples:
+
+        asset -a NEW_ASSET      : Set asset tag
+        asset -a NEW_ASSET -f   : Set asset tag with no prompting
+        asset -a -d             : Delete the asset tag
+        asset -a -d -f          : Delete the asset tag with no prompting
+
+
+      3.1 Full description of command line switches
+
+      If this tool is executed without any command line options, this 
+      tool displays the FRU field information from the system, similar 
+      to the -i option described below.
+
+          a. -i
+          
+             This option displays the following information read from 
+             the system:
+
+             Asset Tag
+             Service Tag
+             PPID
+
+          b. -a <value>
+
+             This option is used to set the Asset Tag and it must be 
+             followed by the asset tag value.  The <value> parameter 
+             is an ASCII value up to 10 characters long. If less than 
+             10 characters are entered, this tool pads the FRU field 
+             with trailing spaces (0x20).  If more than 10 characters 
+             are entered, this tool displays an error message and exits 
+             with an exit error code.
+
+             Before setting this value, this tool prompts the user 
+             whether or not to continue with the operation, unless the
+             -f option is used.
+
+             Examples:
+
+             1. Set asset tag to "NEW_ASSET"
+
+                asset -a NEW_ASSET
+
+             2. Set asset tag to "NEW_ASSET" with no prompting.
+
+                asset -a NEW_ASSET -f
+
+          c. -d
+
+             This option is used in conjunction with -a option to delete 
+             the asset tag by filling out the field with spaces (0x20).
+
+             Before deleting the field, this tool prompts the user whether 
+             or not to continue with the operation, unless the -f option 
+             is used.
+
+             Examples:
+
+             1. Delete the asset tag.
+
+                asset -a -d
+
+             2. Delete the asset tag with no prompting.
+
+                asset -a -d -f
+
+          d. -f
+
+             This option is used in conjunction with -a and -d to disable 
+             prompting the user whether or not to continue with the operation.
+
+
+E. LIST OF FILES REQUIRED TO RUN THIS TOOL
+
+   1. asset.efi
+   2. frudata.efi
+   3. frudata.str
+   4. ipmi.efi
+
+
+F. KNOWN ISSUES
+
+   None
+
+*  Third-party brands and names are the property of their respective owners. 
+
+(end)
